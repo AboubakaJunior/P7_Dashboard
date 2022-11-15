@@ -38,7 +38,7 @@ json_url = requests.get(API_url)
 API_data = json_url.json()
 
 TestDash['Probas_Prevision'] = API_data["proba"]
-B = TestDash['Probas_Prevision'][TestDash.SK_ID_CURR == platform_name].values[0]
+B = TestDash['Probas_Prevision'][TestDash.SK_ID_CURR == platform_name].values[0][0]
 
 
 
