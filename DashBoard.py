@@ -6,8 +6,10 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
+import requests
 import seaborn as sns
 import streamlit.components.v1 as components
+import json
 
 import lime
 import lime.lime_tabular
@@ -31,8 +33,11 @@ TrainDash.head()
 #st.subheader('Platform wise sales')
 # drop down for unique value from a column
 platform_name = st.sidebar.selectbox('Select ID client', options=TestDash.SK_ID_CURR.unique())
+API_url = "https://deployer-api.herokuapp.com/prediction/" + str(platform_name)
+json_url = requests.get(API_url)
+API_data = json_url.json()
 
-TestDash['Probas_Prevision'] = TestDash['Probas_Prevision'].astype("float64")
+TestDash['Probas_Prevision'] = API_data["proba"]
 B=TestDash['Probas_Prevision'][TestDash.SK_ID_CURR==platform_name].values[0]
 
 
